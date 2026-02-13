@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:title" content="Para mi amor ❤️" />
+    <meta property="og:description" content="Tengo algo especial para decirte. Abrilo cuando puedas..." />
+    <meta property="og:image" content="https://tuweb.com/" />
+    <meta property="og:url" content="https://tuweb.com/images/whatsApp.jpg" />
+    <meta property="og:type" content="website" />
+    <title>Para mi Princesa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div id="night-sky">
+        <div id="main-lantern" class="lantern-pulsing" onclick="startMagic()">
+            <div class="flame"></div>
+        </div>
+        <div id="heart-container"></div>
+        <div id="final-message">Feliz San Valentín mi princesa</div>
+        <div id="final-heart-container"></div>
+        <div id="thank-you-message">
+            Gracias por esta aventura.<br>Te amo para toda la vida amor.
+        </div>
+    </div>
+
+    <audio id="background-music" preload="auto">
+        <source src="./audio/Rio Roma - Me Cambiaste La Vida LETRA.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="message-modal" class="modal-hidden">
+        <div class="modal-content">
+            <span id="modal-text"></span>
+            <button onclick="closeModal()">Continuar</button>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>

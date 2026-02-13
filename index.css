@@ -1,0 +1,293 @@
+/* =========================================
+   CONFIGURACIÓN GLOBAL Y FONDO
+   ========================================= */
+body, html {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('images/fondo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: #020208;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+#night-sky { 
+    position: relative; 
+    width: 100vw; 
+    height: 100vh; 
+}
+
+/* =========================================
+   ESTRELLAS Y LINTERNAS VOLADORAS
+   ========================================= */
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle var(--duration) infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+.flying-lantern {
+    position: absolute;
+    width: 12px; height: 20px;
+    background: #ffcc33;
+    border-radius: 3px;
+    box-shadow: 0 0 10px #ffcc33;
+    opacity: 0;
+    z-index: 5;
+    animation: floatUpAndFade 15s linear forwards;
+}
+
+@keyframes floatUpAndFade {
+    0% { transform: translateY(110vh) translateX(0px) scale(0.5); opacity: 0; }
+    20% { opacity: 0.7; }
+    80% { opacity: 0.7; }
+    100% { transform: translateY(-20vh) translateX(40px) scale(1.1); opacity: 0; }
+}
+
+/* =========================================
+   LINTERNA PRINCIPAL (INICIO)
+   ========================================= */
+#main-lantern {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px; height: 70px;
+    background: #ffcc33;
+    border-radius: 10px;
+    box-shadow: 0 0 50px #ffcc33, inset 0 0 20px #ff8800;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.flame {
+    position: absolute; bottom: 10px; left: 50%;
+    transform: translateX(-50%);
+    width: 15px; height: 25px;
+    background: #ff5500;
+    border-radius: 50% 50% 20% 20%;
+    filter: blur(2px);
+    animation: flicker 0.1s infinite alternate;
+}
+
+@keyframes flicker {
+    from { transform: translateX(-50%) scale(1); }
+    to { transform: translateX(-50%) scale(1.1); }
+}
+
+/* =========================================
+   CORAZÓN INICIAL (LINTERNAS Y FOTOS CIRCULARES)
+   ========================================= */
+.heart-lantern {
+    position: absolute;
+    width: 8px; height: 12px;
+    background: #ffcc33;
+    border-radius: 2px;
+    box-shadow: 0 0 8px #ffcc33;
+    opacity: 0;
+    transition: all 3s ease-in-out;
+    transform: translate(-50%, -50%);
+}
+
+.with-photo {
+    width: 55px; height: 55px;
+    border-radius: 50%;
+    border: 2px solid #ffcc33;
+    box-shadow: 0 0 20px #ffcc33;
+    z-index: 50;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.photo-active {
+    transform: scale(1.3) !important;
+    z-index: 100 !important;
+    box-shadow: 0 0 40px #ffffff !important;
+    border: 3px solid #ffffff !important;
+    transition: all 0.5s ease;
+}
+
+/* =========================================
+   COLLAGE FINAL (EL CORAZÓN PERFECTO)
+   ========================================= */
+.final-collage-photo {
+    position: absolute;
+    width: 40px; 
+    height: 40px;
+    background-size: cover;
+    background-position: center;
+    border: 0.5px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(255, 204, 51, 0.5);
+    opacity: 0;
+    border-radius: 2px;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    z-index: 150;
+    /* CENTRADO CRUCIAL PARA LA ECUACIÓN */
+    transform: translate(-50%, -50%) scale(0);
+}
+
+/* =========================================
+   MODAL: PAPEL QUEMADO / PERGAMINO
+   ========================================= */
+#message-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    /* FONDO TRANSPARENTE pedido para ver el corazón atrás */
+    background: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
+    backdrop-filter: blur(2px);
+}
+
+#message-modal.modal-show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: #f2e1c1;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%),
+        url('https://www.transparenttextures.com/patterns/parchment.png');
+    
+    padding: 30px;
+    border-radius: 2px;
+    text-align: center;
+    width: 80%;
+    max-width: 420px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow: 
+        0 0 20px rgba(0,0,0,0.5),
+        inset 0 0 40px rgba(139, 69, 19, 0.4), 
+        0 0 0 4px #3d2b1f; 
+    
+    clip-path: polygon(
+        2% 4%, 18% 1%, 38% 4%, 62% 0%, 88% 3%, 99% 1%, 
+        100% 28%, 96% 52%, 100% 78%, 98% 96%, 
+        72% 99%, 48% 95%, 22% 100%, 4% 96%, 
+        1% 72%, 4% 48%, 0% 22%
+    );
+    
+    transform: scale(0.7) rotate(-3deg);
+    transition: transform 1.2s ease-out;
+}
+
+#message-modal.modal-show .modal-content {
+    transform: scale(1) rotate(-1deg);
+}
+
+#modal-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.6rem;
+    color: #3d2b1f; 
+    margin-bottom: 25px;
+    line-height: 1.3;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.4);
+    width: 100%;
+}
+
+.modal-content button {
+    background: #3d2b1f;
+    color: #f2e1c1;
+    border: 1px solid #2a1d15;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
+    margin-top: 10px;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(circle at top left, rgba(0,0,0,0.2), transparent 30%),
+                radial-gradient(circle at bottom right, rgba(0,0,0,0.2), transparent 30%);
+    pointer-events: none;
+}
+
+/* =========================================
+   MENSAJES FLOTANTES
+   ========================================= */
+#final-message, #thank-you-message {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Dancing Script', cursive;
+    color: #ffcc33;
+    text-shadow: 0 0 15px rgba(255, 204, 51, 0.9);
+    text-align: center;
+    width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 3s ease-in;
+    z-index: 2000;
+}
+
+#final-message { top: 8%; font-size: 2rem; }
+#thank-you-message { bottom: 5%; font-size: 1.8rem; }
+
+#final-message.show, #thank-you-message.show {
+    opacity: 1;
+    visibility: visible;
+    animation: floatingText 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatingText {
+    from { transform: translateX(-50%) translateY(0); }
+    to { transform: translateX(-50%) translateY(-12px); }
+}
+
+/* =========================================
+   RESPONSIVE (PC Y TABLETS)
+   ========================================= */
+@media (min-width: 768px) {
+    #final-message { font-size: 4.5rem; top: 10%; }
+    #thank-you-message { font-size: 3.5rem; bottom: 5%; }
+    .with-photo { width: 95px; height: 95px; }
+    .final-collage-photo { width: 75px; height: 75px; }
+    #modal-text { font-size: 2.5rem; }
+    .modal-content { padding: 40px; width: 85%; }
+}
+
+/* --- LLUVIA DE CORAZONES --- */
+.floating-heart {
+    position: fixed;
+    top: -10vh; /* Empiezan arriba de la pantalla */
+    z-index: 2500; /* Por encima de todo, menos el modal */
+    user-select: none;
+    pointer-events: none; /* Para que no interfieran con clics */
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg); /* Caen hasta abajo y rotan */
+    }
+}
