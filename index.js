@@ -14,10 +14,10 @@ const fotosFinales = [
 ];
 
 const misMensajes = [
-    "Sos lo más lindo que me pasó en la vida.",
-    "Cada momento a tu lado es un regalo del cielo.",
-    "Tu sonrisa ilumina hasta mis días más oscuros.",
-    "Gracias por ser mi compañero y mi príncipe.",
+    "Hola bebé, espero que este regalo te guste.",
+    "Cada momento a tu lado es un regalo del cielo, una bendición.",
+    "Tu sonrisa ilumina mis días más oscuros, hasta cambio mi humor si estás conmigo.",
+    "Gracias por ser mi compañera, gracias por siempre acompañarme.",
     "En tus ojos veo mi presente y mi futuro.",
     "Sos la luz que guía mis pasos, como en Enredados.",
     "Te voy amar por siempre, y un día más."
@@ -69,7 +69,6 @@ function createHeart() {
     const totalPoints = 60; 
     const photosCopy = [...tusFotos]; 
     const isMobile = window.innerWidth < 768;
-    // Escala inicial del corazón (el que tiene las fotos circulares)
     const baseScale = isMobile ? (window.innerWidth / 38) : 22;
     const safeIndices = [2, 8, 15, 22, 38, 45, 52, 58]; 
     photosReference = []; 
@@ -138,13 +137,13 @@ function closeModal() {
     } else {
         setTimeout(() => {
             createOrderedHeartCollage();
-            createHeartRain(); // Iniciamos la lluvia al final
+            createHeartRain(); 
         }, 1000);
     }
 }
 
 /* =========================================
-   COLLAGE FINAL Y LLUVIA (CORREGIDO)
+   COLLAGE FINAL, LLUVIA Y VISUALIZADOR
    ========================================= */
 function createOrderedHeartCollage() {
     const container = document.getElementById('heart-container');
@@ -156,13 +155,10 @@ function createOrderedHeartCollage() {
     
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-    
-    // Escala ajustada para que el corazón final quepa perfecto en el ancho
     const scale = isMobile ? (window.innerWidth / 42) : (window.innerWidth / 55);                
 
     for (let i = 0; i < totalPhotos; i++) {
         const t = (i / totalPhotos) * Math.PI * 2;
-        
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
 
@@ -171,11 +167,13 @@ function createOrderedHeartCollage() {
         
         const randomFoto = fotosFinales[Math.floor(Math.random() * fotosFinales.length)];
         photoDiv.style.backgroundImage = `url('${randomFoto}')`;
-        
         photoDiv.style.width = photoSize + 'px';
         photoDiv.style.height = photoSize + 'px';
         
-        // Posicionamiento exacto
+        // Habilitar el clic para ver en grande
+        photoDiv.style.cursor = 'pointer';
+        photoDiv.onclick = () => openPhoto(randomFoto);
+
         photoDiv.style.left = (centerX + x * scale) + 'px';
         photoDiv.style.top = (centerY + y * scale) + 'px';
 
@@ -190,6 +188,18 @@ function createOrderedHeartCollage() {
     setTimeout(() => {
         document.getElementById('thank-you-message').classList.add('show');
     }, 2500);
+}
+
+// Funciones para el Visualizador de fotos
+function openPhoto(url) {
+    const viewer = document.getElementById('photo-viewer');
+    const bigPhoto = document.getElementById('big-photo');
+    bigPhoto.src = url;
+    viewer.style.display = 'flex';
+}
+
+function closePhoto() {
+    document.getElementById('photo-viewer').style.display = 'none';
 }
 
 function createHeartRain() {
