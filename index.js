@@ -14,7 +14,7 @@ const fotosFinales = [
 ];
 
 const misMensajes = [
-    "Hola bebé, espero que este regalo te guste.",
+    "Hola bebé, espero que éste regalo te guste.",
     "Cada momento a tu lado es un regalo del cielo, una bendición.",
     "Tu sonrisa ilumina mis días más oscuros, hasta cambio mi humor si estás conmigo.",
     "Gracias por ser mi compañera, gracias por siempre acompañarme.",
