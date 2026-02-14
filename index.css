@@ -132,27 +132,27 @@ body, html {
     border-radius: 2px;
     transition: opacity 0.8s ease, transform 0.8s ease;
     z-index: 150;
-    /* CENTRADO CRUCIAL PARA LA ECUACIÓN */
     transform: translate(-50%, -50%) scale(0);
 }
 
 /* =========================================
-   MODAL: PAPEL QUEMADO / PERGAMINO
+   MODAL: PAPEL QUEMADO / PERGAMINO (AJUSTADO)
    ========================================= */
 #message-modal {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    /* FONDO TRANSPARENTE pedido para ver el corazón atrás */
-    background: rgba(0, 0, 0, 0.6); 
+    /* Fondo oscuro mucho más transparente para ver el corazón atrás */
+    background: rgba(0, 0, 0, 0.3); 
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 3000;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
-    backdrop-filter: blur(2px);
+    /* Transición de fondo más lenta */
+    transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
+    backdrop-filter: blur(3px); /* Desenfoque elegante */
 }
 
 #message-modal.modal-show {
@@ -161,7 +161,8 @@ body, html {
 }
 
 .modal-content {
-    background: #f2e1c1;
+    /* Fondo crema con transparencia (0.85) para dejar ver el fondo */
+    background: rgba(242, 225, 193, 0.85);
     background-image: 
         radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%),
         url('https://www.transparenttextures.com/patterns/parchment.png');
@@ -178,10 +179,11 @@ body, html {
     justify-content: center;
 
     box-shadow: 
-        0 0 20px rgba(0,0,0,0.5),
-        inset 0 0 40px rgba(139, 69, 19, 0.4), 
-        0 0 0 4px #3d2b1f; 
+        0 0 20px rgba(0,0,0,0.3),
+        inset 0 0 40px rgba(139, 69, 19, 0.2); 
     
+    border: 2px solid rgba(61, 43, 31, 0.6);
+
     clip-path: polygon(
         2% 4%, 18% 1%, 38% 4%, 62% 0%, 88% 3%, 99% 1%, 
         100% 28%, 96% 52%, 100% 78%, 98% 96%, 
@@ -189,8 +191,9 @@ body, html {
         1% 72%, 4% 48%, 0% 22%
     );
     
+    /* Animación de entrada mucho más suave y lenta */
     transform: scale(0.7) rotate(-3deg);
-    transition: transform 1.2s ease-out;
+    transition: transform 1.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 #message-modal.modal-show .modal-content {
@@ -221,15 +224,6 @@ body, html {
     box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
     transition: transform 0.2s;
     margin-top: 10px;
-}
-
-.modal-content::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: radial-gradient(circle at top left, rgba(0,0,0,0.2), transparent 30%),
-                radial-gradient(circle at bottom right, rgba(0,0,0,0.2), transparent 30%);
-    pointer-events: none;
 }
 
 /* =========================================
@@ -279,17 +273,15 @@ body, html {
 /* --- LLUVIA DE CORAZONES --- */
 .floating-heart {
     position: fixed;
-    top: -10vh; /* Empiezan arriba de la pantalla */
-    z-index: 2500; /* Por encima de todo, menos el modal */
+    top: -10vh;
+    z-index: 2500;
     user-select: none;
-    pointer-events: none; /* Para que no interfieran con clics */
+    pointer-events: none;
     animation: fall linear forwards;
 }
 
 @keyframes fall {
-    to {
-        transform: translateY(110vh) rotate(360deg); /* Caen hasta abajo y rotan */
-    }
+    to { transform: translateY(110vh) rotate(360deg); }
 }
 
 /* --- VISOR DE FOTOS --- */
@@ -298,7 +290,7 @@ body, html {
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: rgba(0, 0, 0, 0.9);
-    display: none; /* Oculto por defecto */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 5000;
@@ -310,7 +302,7 @@ body, html {
     position: relative;
     max-width: 85%;
     max-height: 80%;
-    border: 8px solid white; /* Marco blanco elegante */
+    border: 8px solid white;
     box-shadow: 0 0 30px rgba(255, 204, 51, 0.5);
     border-radius: 5px;
     animation: zoomIn 0.3s ease-out;
@@ -323,7 +315,6 @@ body, html {
     object-fit: contain;
 }
 
-/* Decoración del marco (esquinas doradas) */
 .viewer-frame::before, .viewer-frame::after {
     content: '';
     position: absolute;

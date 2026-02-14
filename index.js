@@ -26,9 +26,6 @@ const misMensajes = [
 let currentPhotoIndex = 0;
 let photosReference = []; 
 
-/* =========================================
-   INICIALIZACIÓN
-   ========================================= */
 document.addEventListener('DOMContentLoaded', () => {
     createStars();
 });
@@ -49,9 +46,6 @@ function createStars() {
     }
 }
 
-/* =========================================
-   LÓGICA PRINCIPAL
-   ========================================= */
 function startMagic() {
     const main = document.getElementById('main-lantern');
     const music = document.getElementById('background-music');
@@ -77,32 +71,25 @@ function createHeart() {
         const t = (i / totalPoints) * (2 * Math.PI);
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
-        
         const lantern = document.createElement('div');
         lantern.className = 'heart-lantern';
-        
         const posX = (window.innerWidth / 2) + (x * baseScale);
         const posY = (window.innerHeight / 2) + (y * baseScale);
-        
         if (safeIndices.includes(i) && photosCopy.length > 0) {
             const fotoUrl = photosCopy.shift();
             lantern.classList.add('with-photo');
             lantern.style.backgroundImage = `url('${fotoUrl}')`;
             photosReference.push(lantern); 
         }
-        
         lantern.style.left = (window.innerWidth / 2) + 'px';
         lantern.style.top = (window.innerHeight / 2) + 'px';
-        
         setTimeout(() => {
             lantern.style.left = posX + 'px';
             lantern.style.top = posY + 'px';
             lantern.style.opacity = '1';
         }, i * 50);
-        
         container.appendChild(lantern);
     }
-    
     setTimeout(() => {
         document.getElementById('final-message').classList.add('show');
         setTimeout(showNextModal, 3000);
@@ -115,10 +102,8 @@ function showNextModal() {
         const modal = document.getElementById('message-modal');
         const modalContent = document.querySelector('.modal-content');
         const modalText = document.getElementById('modal-text');
-        
         const randomRot = Math.random() * 6 - 3;
         modalContent.style.transform = `rotate(${randomRot}deg)`;
-
         photo.classList.add('photo-active');
         modalText.innerText = misMensajes[currentPhotoIndex] || "¡Te amo!";
         modal.classList.add('modal-show');
@@ -131,9 +116,8 @@ function closeModal() {
     modal.classList.remove('modal-show');
     photo.classList.remove('photo-active');
     currentPhotoIndex++;
-    
     if (currentPhotoIndex < photosReference.length) {
-        setTimeout(showNextModal, 1000);
+        setTimeout(showNextModal, 1200); // Pausa un poco más larga entre mensajes
     } else {
         setTimeout(() => {
             createOrderedHeartCollage();
@@ -142,55 +126,40 @@ function closeModal() {
     }
 }
 
-/* =========================================
-   COLLAGE FINAL, LLUVIA Y VISUALIZADOR
-   ========================================= */
 function createOrderedHeartCollage() {
     const container = document.getElementById('heart-container');
     container.innerHTML = ''; 
-    
     const isMobile = window.innerWidth < 768;
     const totalPhotos = isMobile ? 55 : 120; 
     const photoSize = isMobile ? 32 : 65; 
-    
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
     const scale = isMobile ? (window.innerWidth / 42) : (window.innerWidth / 55);                
-
     for (let i = 0; i < totalPhotos; i++) {
         const t = (i / totalPhotos) * Math.PI * 2;
         const x = 16 * Math.pow(Math.sin(t), 3);
         const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-
         const photoDiv = document.createElement('div');
         photoDiv.className = 'final-collage-photo';
-        
         const randomFoto = fotosFinales[Math.floor(Math.random() * fotosFinales.length)];
         photoDiv.style.backgroundImage = `url('${randomFoto}')`;
         photoDiv.style.width = photoSize + 'px';
         photoDiv.style.height = photoSize + 'px';
-        
-        // Habilitar el clic para ver en grande
         photoDiv.style.cursor = 'pointer';
         photoDiv.onclick = () => openPhoto(randomFoto);
-
         photoDiv.style.left = (centerX + x * scale) + 'px';
         photoDiv.style.top = (centerY + y * scale) + 'px';
-
         container.appendChild(photoDiv);
-        
         setTimeout(() => {
             photoDiv.style.opacity = '1';
             photoDiv.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 10 - 5}deg) scale(1)`;
         }, i * 20);
     }
-
     setTimeout(() => {
         document.getElementById('thank-you-message').classList.add('show');
     }, 2500);
 }
 
-// Funciones para el Visualizador de fotos
 function openPhoto(url) {
     const viewer = document.getElementById('photo-viewer');
     const bigPhoto = document.getElementById('big-photo');
